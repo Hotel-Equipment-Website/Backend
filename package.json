@@ -9,15 +9,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ushanchamod/Hotel-Item-Shop-Back-End.git"
+    "url": "git+https://github.com/Hotel-Equipment-Website/Backend.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ushanchamod/Hotel-Item-Shop-Back-End/issues"
+    "url": "https://github.com/Hotel-Equipment-Website/Backend/issues"
   },
-  "homepage": "https://github.com/ushanchamod/Hotel-Item-Shop-Back-End#readme",
+  "homepage": "https://github.com/Hotel-Equipment-Website/Backend#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
