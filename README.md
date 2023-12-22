@@ -1,70 +1,148 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Public Routes
+#### Login
+```
+POST http://localhost:3001/login
 
-## Available Scripts
+{
+    "username": "admin",
+    "password": "Aww@3#44lk"
+}
 
-In the project directory, you can run:
+```
+#### Get All Categories
+```
+GET http://localhost:3001/categories
+```
+#### Get CategorY By Id
+```
+GET http://localhost:3001/category/:id
+```
+#### Get All Items
+```
+GET http://localhost:3001/items
+```
+#### Get Item By Id
+```
+GET http://localhost:3001/item/:id
+```
+#### Get Items By Category Id
+```
+GET http://localhost:3001/category/:id/items
+```
+#### Get Image
+```
+GET http://localhost:3001/images/:name
+```
 
-### `npm start`
+# Privet Routes
+- All Privet Routes Need Authorization Header
+- Example:
+```
+const config = {
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+}
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+const data = {
+    "name": "Category Name"
+}
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+axios.post('/uri, data, config)
+.then(res => {
+    console.log(res)
+})
+.catch(err => {
+    console.log(err)
+})
+```
 
-### `npm test`
+#### Create Category (User Form Data)
+```
+POST http://localhost:3001/category
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+{
+    "name": "Category Name",
+    "images": "image.jpg"
+}
+```
 
-### `npm run build`
+#### Update Category (User Form Data)
+```
+PATCH http://localhost:3001/category
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+{
+    "category_id": 1,
+    "category_name": "catrgory 005"
+    "images": "image.jpg"
+}
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+#### Delete Category
+```
+DELETE http://localhost:3001/category/:id
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+#### Create Item
+```
+POST http://localhost:3001/item (add content type: multipart/form-data)
 
-### `npm run eject`
+{
+    item_name:      Item 001
+    category_id:    9
+    model_number:   55415
+    brand:          Singer
+    description:    This is ample description
+}
+```
+#### Update Item
+```
+PATCH http://localhost:3001/item/:id (add content type: multipart/form-data)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+{
+    item_id:        1
+    item_name:      Item 0011
+    category_id:    94
+    model_number:   55415
+    brand:          Singer 2
+    description:    This is ample description 2
+}
+```
+#### Delete Item
+```
+DELETE http://localhost:3001/item/:id
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+# Database
+### Database Name: his
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```
+CREATE TABLE category(
+	category_id INT PRIMARY KEY AUTO_INCREMENT,
+    category_name varchar(50) not null,
+    image varchar(100)
+);
 
-## Learn More
+CREATE TABLE item(
+	item_id INT PRIMARY KEY AUTO_INCREMENT,
+    item_name varchar(50) NOT null,
+    category_id INT NOT null,
+    image varchar(225),
+    model_number varchar(25) not null,
+    brand varchar(50) not null,
+    description varchar(200),
+    FOREIGN KEY (category_id) REFERENCES category(category_id)
+);
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+CREATE TABLE admin(
+    user_id VARCHAR(50) PRIMARY KEY,
+	username VARCHAR(50) NOT NULL,
+    password VARCHAR(50) not null
+);
 
-### Code Splitting
+insert into admin(user_id, username, password) VALUES ('admin001', 'admin', "Aww@3#44lk");
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```
